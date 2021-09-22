@@ -19,3 +19,6 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+
+// Employee ROute
+// Route::post('employee/create' , '');

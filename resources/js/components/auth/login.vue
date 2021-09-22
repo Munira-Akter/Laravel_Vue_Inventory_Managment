@@ -1,139 +1,89 @@
 <template>
     <div id="login">
-        <div class="wrapper">
-            <section class="login-content">
-                <div class="container">
-                    <div
-                        class="row align-items-center justify-content-center height-self-center"
-                    >
-                        <div class="col-lg-8">
-                            <div class="card auth-card">
-                                <div class="card-body p-0">
-                                    <div
-                                        class="d-flex align-items-center auth-content"
-                                    >
-                                        <div class="col-lg-7 align-self-center">
-                                            <div class="p-3">
-                                                <h2 class="mb-2">Sign In</h2>
-                                                <p>Login to stay connected.</p>
-                                                <form @submit.prevent="login">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div
-                                                                class="floating-label form-group"
-                                                            >
-                                                                <input
-                                                                    class="floating-input form-control"
-                                                                    type="email"
-                                                                    placeholder=" "
-                                                                    v-model="
-                                                                        form.email
-                                                                    "
-                                                                />
-
-                                                                <label
-                                                                    >Email</label
-                                                                >
-
-                                                                <span
-                                                                    v-if="
-                                                                        errors.email
-                                                                    "
-                                                                    class="text-danger"
-                                                                    >{{
-                                                                        errors
-                                                                            .email[0]
-                                                                    }}</span
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div
-                                                                class="floating-label form-group"
-                                                            >
-                                                                <input
-                                                                    class="floating-input form-control"
-                                                                    type="password"
-                                                                    placeholder=" "
-                                                                    v-model="
-                                                                        form.password
-                                                                    "
-                                                                />
-                                                                <span
-                                                                    v-if="
-                                                                        errors.password
-                                                                    "
-                                                                    class="text-danger"
-                                                                    >{{
-                                                                        errors
-                                                                            .password[0]
-                                                                    }}</span
-                                                                >
-                                                                <label
-                                                                    >Password</label
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div
-                                                                class="custom-control custom-checkbox mb-3"
-                                                            >
-                                                                <input
-                                                                    type="checkbox"
-                                                                    class="custom-control-input"
-                                                                    id="customCheck1"
-                                                                />
-                                                                <label
-                                                                    class="custom-control-label control-label-1"
-                                                                    for="customCheck1"
-                                                                    >Remember
-                                                                    Me</label
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <router-link
-                                                                to="/forget-password"
-                                                                class="text-primary float-right"
-                                                                >Forgot
-                                                                Password?</router-link
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                    <button
-                                                        type="submit"
-                                                        class="btn btn-primary"
-                                                    >
-                                                        Sign In
-                                                    </button>
-                                                    <p class="mt-3">
-                                                        Create an Account
-                                                        <router-link
-                                                            to="/register"
-                                                            class="text-primary"
-                                                            >Sign
-                                                            Up</router-link
-                                                        >
-                                                    </p>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5 content-right">
-                                            <img
-                                                :src="
-                                                    'assets/images/login/01.png'
-                                                "
-                                                class="img-fluid image-right"
-                                                alt=""
-                                            />
-                                        </div>
+        <div class="row justify-content-center" style="padding-top:200px;">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Login Form</h4>
+                        <h6 class="card-subtitle"></h6>
+                        <form class="form pt-3" @submit.prevent="login">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"
+                                    >Email address</label
+                                >
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span
+                                            class="input-group-text"
+                                            id="basic-addon1"
+                                        >
+                                            <i class="ti-email"></i>
+                                        </span>
                                     </div>
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        id="exampleInputEmail1"
+                                        placeholder="Enter email"
+                                        v-model="form.email"
+                                    />
+                                    <span
+                                        v-if="errors.eamil"
+                                        class="text-danger"
+                                        >{{ errors.email[0] }}</span
+                                    >
                                 </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label for="pwd1">Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span
+                                            class="input-group-text"
+                                            id="basic-addon1"
+                                        >
+                                            <i class="ti-lock"></i>
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        id="pwd1"
+                                        placeholder="Enter Password"
+                                        v-model="form.password"
+                                    />
+                                    <span
+                                        v-if="errors.password"
+                                        class="text-danger"
+                                        >{{ errors.password[0] }}</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox checkbox-success">
+                                    <input id="checkbox1" type="checkbox" />
+                                    <label for="checkbox1">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="btn btn-success waves-effect waves-light mr-2"
+                            >
+                                Login
+                            </button>
+                            <button
+                                type="reset"
+                                class="btn btn-inverse waves-effect waves-light"
+                            >
+                                Reset
+                            </button>
+                        </form>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 </template>

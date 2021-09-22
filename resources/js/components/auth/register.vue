@@ -1,262 +1,160 @@
 <template>
     <div id="register">
-        <section class="login-content">
-            <div class="container">
-                <div
-                    class="row align-items-center justify-content-center height-self-center"
-                >
-                    <div class="col-lg-8">
-                        <div class="card auth-card">
-                            <div class="card-body p-0">
-                                <div
-                                    class="d-flex align-items-center auth-content"
-                                >
-                                    <div class="col-lg-7 align-self-center">
-                                        <div class="p-3">
-                                            <h2 class="mb-2">Sign Up</h2>
-                                            <p>Create your POSDash account.</p>
-                                            <form @submit.prevent="register">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div
-                                                            class="floating-label form-group"
-                                                        >
-                                                            <input
-                                                                class="floating-input form-control"
-                                                                type="text"
-                                                                placeholder=" "
-                                                                v-model="
-                                                                    form.name
-                                                                "
-                                                            />
-
-                                                            <span
-                                                                v-if="
-                                                                    errors.name
-                                                                "
-                                                                class="text-danger"
-                                                                style="font-size:10px;"
-                                                                >{{
-                                                                    errors
-                                                                        .name[0]
-                                                                }}</span
-                                                            >
-
-                                                            <label
-                                                                >Full
-                                                                Name</label
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div
-                                                            class="floating-label form-group"
-                                                        >
-                                                            <input
-                                                                class="floating-input form-control"
-                                                                type="text"
-                                                                placeholder=" "
-                                                                v-model="
-                                                                    form.last
-                                                                "
-                                                            />
-
-                                                            <span
-                                                                v-if="
-                                                                    errors.last
-                                                                "
-                                                                class="text-danger"
-                                                                style="font-size:10px;"
-                                                                >{{
-                                                                    errors
-                                                                        .last[0]
-                                                                }}</span
-                                                            >
-                                                            <label
-                                                                >Last
-                                                                Name</label
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div
-                                                            class="floating-label form-group"
-                                                        >
-                                                            <input
-                                                                class="floating-input form-control"
-                                                                type="email"
-                                                                placeholder=" "
-                                                                v-model="
-                                                                    form.email
-                                                                "
-                                                            />
-
-                                                            <span
-                                                                v-if="
-                                                                    errors.email
-                                                                "
-                                                                class="text-danger"
-                                                                style="font-size:10px;"
-                                                                >{{
-                                                                    errors
-                                                                        .email[0]
-                                                                }}</span
-                                                            >
-                                                            <label>Email</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div
-                                                            class="floating-label form-group"
-                                                        >
-                                                            <input
-                                                                class="floating-input form-control"
-                                                                type="text"
-                                                                placeholder=" "
-                                                                v-model="
-                                                                    form.phone
-                                                                "
-                                                            />
-                                                            <span
-                                                                v-if="
-                                                                    errors.phone
-                                                                "
-                                                                class="text-danger"
-                                                                style="font-size:10px;"
-                                                                >{{
-                                                                    errors
-                                                                        .phone[0]
-                                                                }}</span
-                                                            >
-                                                            <label
-                                                                >Phone
-                                                                No.</label
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div
-                                                            class="floating-label form-group"
-                                                        >
-                                                            <input
-                                                                class="floating-input form-control"
-                                                                type="password"
-                                                                placeholder=" "
-                                                                v-model="
-                                                                    form.password
-                                                                "
-                                                            />
-                                                            <span
-                                                                v-if="
-                                                                    errors.password
-                                                                "
-                                                                class="text-danger"
-                                                                style="font-size:10px;"
-                                                                >{{
-                                                                    errors
-                                                                        .password[0]
-                                                                }}</span
-                                                            >
-                                                            <label
-                                                                >Password</label
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div
-                                                            class="floating-label form-group"
-                                                        >
-                                                            <input
-                                                                class="floating-input form-control"
-                                                                type="password"
-                                                                placeholder=" "
-                                                                v-model="
-                                                                    form.password_confirmation
-                                                                "
-                                                            />
-                                                            <span
-                                                                v-if="
-                                                                    errors.password_confirmation
-                                                                "
-                                                                class="text-danger"
-                                                                >{{
-                                                                    errors
-                                                                        .password_confirmation[0]
-                                                                }}</span
-                                                            >
-                                                            <label
-                                                                >Confirm
-                                                                Password</label
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div
-                                                            class="custom-control custom-checkbox mb-3"
-                                                        >
-                                                            <input
-                                                                type="checkbox"
-                                                                class="custom-control-input"
-                                                                id="customCheck1"
-                                                                v-model="
-                                                                    form.check
-                                                                "
-                                                            />
-
-                                                            <label
-                                                                class="custom-control-label"
-                                                                for="customCheck1"
-                                                                >I agree with
-                                                                the terms of
-                                                                use</label
-                                                            >
-                                                            <br />
-
-                                                            <span
-                                                                v-if="
-                                                                    errors.check
-                                                                "
-                                                                class="text-danger"
-                                                                style="font-size:10px;"
-                                                                >{{
-                                                                    errors
-                                                                        .check[0]
-                                                                }}</span
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-primary"
-                                                >
-                                                    Sign Up
-                                                </button>
-                                                <p class="mt-3">
-                                                    Already have an Account
-                                                    <router-link
-                                                        to="/"
-                                                        class="text-primary"
-                                                        >Sign In
-                                                    </router-link>
-                                                </p>
-                                            </form>
+        <div class="container-fluid">
+            <div
+                class="row justify-content-center align-content-center"
+                style="padding-top:150px;"
+            >
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Register Form</h4>
+                            <h6 class="card-subtitle"></h6>
+                            <form class="form pt-3" @submit.prevent="register">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2"
+                                        >UserName</label
+                                    >
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span
+                                                class="input-group-text"
+                                                id="basic-addon1"
+                                            >
+                                                <i class="ti-user"></i>
+                                            </span>
                                         </div>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="exampleInputEmail2"
+                                            placeholder="Enter User Name"
+                                            v-model="form.name"
+                                        />
+                                        <br />
                                     </div>
-                                    <div class="col-lg-5 content-right">
-                                        <img
-                                            src=""
-                                            class="img-fluid image-right"
-                                            alt=""
+                                    <h6 v-if="errors.name" class="text-danger">
+                                        {{ errors.name[0] }}
+                                    </h6>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"
+                                        >Email address</label
+                                    >
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span
+                                                class="input-group-text"
+                                                id="basic-addon1"
+                                            >
+                                                <i class="ti-email"></i>
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="exampleInputEmail1"
+                                            placeholder="Enter email"
+                                            v-model="form.email"
+                                        />
+                                        <br />
+                                    </div>
+                                    <h6 v-if="errors.email" class="text-danger">
+                                        {{ errors.email[0] }}
+                                    </h6>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pwd1">Password</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span
+                                                class="input-group-text"
+                                                id="basic-addon1"
+                                            >
+                                                <i class="ti-lock"></i>
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="password"
+                                            class="form-control"
+                                            id="pwd1"
+                                            placeholder="Enter Password"
+                                            v-model="form.password"
+                                        />
+                                        <br />
+                                    </div>
+                                    <h6
+                                        v-if="errors.password"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.password[0] }}
+                                    </h6>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pwd1">Confirm Password</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span
+                                                class="input-group-text"
+                                                id="basic-addon1"
+                                            >
+                                                <i class="ti-lock"></i>
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="password"
+                                            class="form-control"
+                                            id="pwd1"
+                                            placeholder="Enter Password"
+                                            v-model="form.password_confirmation"
                                         />
                                     </div>
                                 </div>
-                            </div>
+                                <span
+                                    v-if="errors.password_confirmation"
+                                    class="text-danger"
+                                    >{{ errors.password_confirmation[0] }}</span
+                                >
+
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-success">
+                                        <input
+                                            id="checkbox1"
+                                            type="checkbox"
+                                            v-model="form.check"
+                                        />
+                                        <label for="checkbox1">
+                                            Remember me </label
+                                        ><br />
+                                        <span
+                                            v-if="errors.check"
+                                            class="text-danger"
+                                            >{{ errors.check[0] }}</span
+                                        >
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-success waves-effect waves-light mr-2"
+                                >
+                                    Register
+                                </button>
+                                <button
+                                    type="reset"
+                                    class="btn btn-inverse waves-effect waves-light"
+                                >
+                                    Reset
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </template>
 <script>
@@ -270,7 +168,6 @@ export default {
         return {
             form: {
                 name: null,
-                last: null,
                 email: null,
                 phone: null,
                 password_confirmation: null,

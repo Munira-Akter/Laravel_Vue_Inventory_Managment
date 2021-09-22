@@ -36,6 +36,13 @@ window.Toast = Toast;
 import User from "./Helper/User";
 window.User = User;
 
+try {
+    window.Popper = require("popper.js").default;
+    window.$ = window.jQuery = require("jquery");
+
+    require("bootstrap");
+} catch (e) {}
+
 // Import Notification js file for Noty
 import Notification from "./Helper/Notification";
 window.Notification = Notification;

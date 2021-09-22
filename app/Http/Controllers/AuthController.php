@@ -58,9 +58,7 @@ class AuthController extends Controller
 
        $request -> validate([
            'name' => 'required',
-           'last' => 'required',
            'email' => 'required|email|unique:users',
-           'email' => 'unique:users',
            'password' => 'required|min:3|max:6|confirmed',
            'check' => 'required',
        ]);
@@ -68,9 +66,8 @@ class AuthController extends Controller
 
 
        User::create([
-           'name' => $request -> name . ' ' . $request -> last,
+           'name' => $request -> name,
            'email' => $request -> email,
-           'phone' => $request -> phone,
            'password' => Hash::make($request -> password)
            ,
        ]);
