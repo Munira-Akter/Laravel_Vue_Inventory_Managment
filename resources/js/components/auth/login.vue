@@ -27,13 +27,16 @@
                                         placeholder="Enter email"
                                         v-model="form.email"
                                     />
-                                    <span
-                                        v-if="errors.eamil"
-                                        class="text-danger"
-                                        >{{ errors.email[0] }}</span
-                                    >
                                 </div>
+                                <br />
+                                <p
+                                    v-if="errors.email"
+                                    class="text-danger font-weight-bold"
+                                >
+                                    {{ errors.email[0] }}
+                                </p>
                             </div>
+
                             <div class="form-group">
                                 <label for="pwd1">Password</label>
                                 <div class="input-group">
@@ -52,12 +55,13 @@
                                         placeholder="Enter Password"
                                         v-model="form.password"
                                     />
-                                    <span
-                                        v-if="errors.password"
-                                        class="text-danger"
-                                        >{{ errors.password[0] }}</span
-                                    >
                                 </div>
+                                <br />
+                                <span
+                                    v-if="errors.password"
+                                    class="text-danger font-weight-bold"
+                                    >{{ errors.password[0] }}</span
+                                >
                             </div>
                             <div class="form-group">
                                 <div class="checkbox checkbox-success">
@@ -123,14 +127,15 @@ export default {
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors;
-                })
+                    console.log(error);
+                });
 
-                .catch(
-                    Toast.fire({
-                        icon: "warning",
-                        title: "Invalid Email or Password"
-                    })
-                );
+            // .catch(
+            //     Toast.fire({
+            //         icon: "warning",
+            //         title: "Invalid Email or Password"
+            //     })
+            // );
         }
     }
 };

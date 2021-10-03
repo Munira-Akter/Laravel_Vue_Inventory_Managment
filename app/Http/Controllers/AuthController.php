@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\RegisterMail;
 use Illuminate\Http\Request;
 use Illuminate\Auth\SessionGuard;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -71,6 +73,15 @@ class AuthController extends Controller
            'password' => Hash::make($request -> password)
            ,
        ]);
+
+        // email data
+        $email_data = [
+            'name' => $request -> name,
+            'email' => $request -> email,
+            'password' => $request -> password,
+        ];
+
+        Mail::to($request -> email)->send(new RegisterMail($email_data));
 
        return $this->login($request);
 

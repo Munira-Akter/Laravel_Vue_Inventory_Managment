@@ -133,75 +133,172 @@
                                                 ><span>Print</span></a
                                             >
                                         </div>
-                                        <table
-                                            id="example23"
-                                            class="display nowrap table table-hover table-striped table-bordered dataTable dtr-inline"
-                                            role="grid"
-                                            aria-describedby="example23_info"
-                                            style="width: 100%;"
-                                            width="100%"
-                                            cellspacing="0"
+                                        <div
+                                            id="example23_filter"
+                                            class="dataTables_filter"
                                         >
-                                            <thead>
-                                                <tr role="row">
-                                                    <th>
-                                                        Name
-                                                    </th>
-                                                    <th>
-                                                        Position
-                                                    </th>
-                                                    <th>
-                                                        Office
-                                                    </th>
-                                                    <th>
-                                                        Age
-                                                    </th>
-                                                    <th>
-                                                        Start date
-                                                    </th>
-                                                    <th>
-                                                        Salary
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th rowspan="1" colspan="1">
-                                                        Name
-                                                    </th>
-                                                    <th rowspan="1" colspan="1">
-                                                        Position
-                                                    </th>
-                                                    <th rowspan="1" colspan="1">
-                                                        Office
-                                                    </th>
-                                                    <th rowspan="1" colspan="1">
-                                                        Age
-                                                    </th>
-                                                    <th rowspan="1" colspan="1">
-                                                        Start date
-                                                    </th>
-                                                    <th rowspan="1" colspan="1">
-                                                        Salary
-                                                    </th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <tr role="row" class="odd">
-                                                    <td
-                                                        tabindex="0"
-                                                        class="sorting_1"
+                                            <label
+                                                >Search:<input
+                                                    v-model="serach"
+                                                    type="search"
+                                                    class="form-control form-control-sm"
+                                                    placeholder=""
+                                                    aria-controls="example23"
+                                            /></label>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table
+                                                id="example23"
+                                                class="display nowrap table table-hover table-striped table-bordered dataTable dtr-inline"
+                                                role="grid"
+                                                aria-describedby="example23_info"
+                                                style="width: 100%;"
+                                                width="100%"
+                                                cellspacing="0"
+                                            >
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th>
+                                                            Name
+                                                        </th>
+                                                        <th>
+                                                            Email
+                                                        </th>
+                                                        <th>
+                                                            Phone
+                                                        </th>
+                                                        <th>
+                                                            Role
+                                                        </th>
+                                                        <th>
+                                                            Salary
+                                                        </th>
+                                                        <th>
+                                                            Image
+                                                        </th>
+                                                        <th>
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                        >
+                                                            Name
+                                                        </th>
+                                                        <th
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                        >
+                                                            Email
+                                                        </th>
+                                                        <th
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                        >
+                                                            Phone
+                                                        </th>
+                                                        <th
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                        >
+                                                            Role
+                                                        </th>
+                                                        <th
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                        >
+                                                            Salary
+                                                        </th>
+                                                        <th
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                        >
+                                                            Image
+                                                        </th>
+                                                        <th
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                        >
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <tr
+                                                        role="row"
+                                                        v-for="employe in filterSreach"
+                                                        :key="employe.id"
                                                     >
-                                                        Airi Satou
-                                                    </td>
-                                                    <td>Accountant</td>
-                                                    <td>Tokyo</td>
-                                                    <td>33</td>
-                                                    <td>2008/11/28</td>
-                                                    <td>$162,700</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                        <td>
+                                                            {{ employe.name }}
+                                                        </td>
+                                                        <td>
+                                                            {{ employe.email }}
+                                                        </td>
+                                                        <td>
+                                                            {{ employe.phone }}
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="badge badge-danger"
+                                                                >{{
+                                                                    employe.role
+                                                                }}</span
+                                                            >
+                                                        </td>
+                                                        <td>
+                                                            {{ employe.salary }}
+                                                        </td>
+                                                        <td>
+                                                            <img
+                                                                :src="
+                                                                    employe.photo
+                                                                "
+                                                                class="employee_photo"
+                                                            />
+                                                        </td>
+
+                                                        <td class="text-nowrap">
+                                                            <router-link
+                                                                :to="{
+                                                                    name:
+                                                                        'employee-edit',
+                                                                    params: {
+                                                                        id:
+                                                                            employe.id
+                                                                    }
+                                                                }"
+                                                                data-toggle="tooltip"
+                                                                data-original-title="Edit"
+                                                                aria-describedby="tooltip766382"
+                                                            >
+                                                                <i
+                                                                    class="fas fa-pencil-alt text-inverse mr-2"
+                                                                ></i>
+                                                            </router-link>
+                                                            <a
+                                                                href="#"
+                                                                @click.prevent="
+                                                                    deleteEmployee(
+                                                                        employe.id
+                                                                    )
+                                                                "
+                                                                data-toggle="tooltip"
+                                                                data-original-title="Close"
+                                                            >
+                                                                <i
+                                                                    class="fas fa-window-close text-danger"
+                                                                ></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -224,6 +321,7 @@
             <!-- ============================================================== -->
             <div class="col-md-12">
                 <div
+                    ref="vuemodal"
                     class="modal fade"
                     id="success-header-modal"
                     tabindex="-1"
@@ -280,9 +378,8 @@
                                                 >
                                                 <input
                                                     class="form-control"
-                                                    type="email"
+                                                    type="text"
                                                     id="username"
-                                                    required=""
                                                     placeholder="Enter Name"
                                                     v-model="form.name"
                                                 />
@@ -318,7 +415,7 @@
                                                 <label for="phone">Phone</label>
                                                 <input
                                                     class="form-control"
-                                                    type="email"
+                                                    type="text"
                                                     id="phone"
                                                     placeholder="Phone Number"
                                                     v-model="form.phone"
@@ -336,57 +433,13 @@
                                                     class="form-control"
                                                     v-model="form.role"
                                                 >
-                                                    <option value=""
-                                                        >Male</option
-                                                    >
-                                                    <option value=""
-                                                        >Female</option
+                                                    <option value="Employee"
+                                                        >Employee</option
                                                     >
                                                 </select>
                                                 <span v-if="errors.role">{{
                                                     errors.role[0]
                                                 }}</span>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                    </div>
-
-                                    <div class="row pt-3">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="salary"
-                                                    >salary</label
-                                                >
-                                                <input
-                                                    class="form-control"
-                                                    type="text"
-                                                    id="salary"
-                                                    placeholder="Salary"
-                                                    v-model="form.salary"
-                                                />
-                                                <span v-if="errors.salary">{{
-                                                    errors.salary[0]
-                                                }}</span>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="photo">Photo</label>
-                                                <input
-                                                    class="form-control"
-                                                    type="file"
-                                                    id="photo"
-                                                    @change="fileUpload"
-                                                />
-                                                <span v-if="errors.photo">{{
-                                                    errors.photo[0]
-                                                }}</span>
-                                                <img
-                                                    :src="form.photo"
-                                                    height="200px"
-                                                    alt=""
-                                                />
                                             </div>
                                         </div>
                                         <!--/span-->
@@ -436,6 +489,47 @@
                                         <!--/span-->
                                     </div>
 
+                                    <div class="row pt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="salary"
+                                                    >salary</label
+                                                >
+                                                <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    id="salary"
+                                                    placeholder="Salary"
+                                                    v-model="form.salary"
+                                                />
+                                                <span v-if="errors.salary">{{
+                                                    errors.salary[0]
+                                                }}</span>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="photo">Photo</label>
+                                                <input
+                                                    class="form-control"
+                                                    type="file"
+                                                    id="photo"
+                                                    @change="fileUpload"
+                                                />
+                                                <span v-if="errors.photo">{{
+                                                    errors.photo[0]
+                                                }}</span>
+                                                <img
+                                                    :src="form.photo"
+                                                    height="100px"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+
                                     <div class="form-group text-center">
                                         <button
                                             class="btn btn-primary"
@@ -470,28 +564,107 @@ export default {
                 photo: null
             },
 
-            errors: {}
+            errors: {},
+
+            employee: [],
+            serach: ""
         };
     },
-
-    mounted() {},
+    computed: {
+        filterSreach() {
+            return this.employee.filter(employe => {
+                return (
+                    employe.name
+                        .toLowerCase()
+                        .match(this.serach.toLowerCase()) ||
+                    employe.email
+                        .toLowerCase()
+                        .match(this.serach.toLowerCase()) ||
+                    employe.phone.toLowerCase().match(this.serach.toLowerCase())
+                );
+            });
+        }
+    },
 
     methods: {
+        showAllEmployee() {
+            axios.get("/api/employee").then(response => {
+                this.employee = response.data;
+            });
+        },
+        fileUpload(event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = event => {
+                this.form.photo = event.target.result;
+                // console.log(this.form.photo);
+            };
+            reader.readAsDataURL(file);
+        },
         addEmployee() {
             axios
-                .post("/api/auth/employee/create", this.form)
+                .post("/api/create", this.form)
                 .then(response => {
-                    console.log(response.data);
+                    this.showAllEmployee();
+                    this.form = "";
+                    this.form.photo = null;
+                    $("#success-header-modal").modal("hide");
+                    Toast.fire({
+                        icon: "success",
+                        title: "Employee Added Successfully"
+                    });
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors;
                 });
+        },
+        // Delete Sinle Employee Data
+        deleteEmployee(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#2196F3",
+                confirmButtonText: "Delete"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios
+                        .delete("api/employee/delete/" + id)
+                        .then(res => {
+                            this.employee = this.employee.filter(employee => {
+                                return employee.id != id;
+                            });
+                        })
+                        .catch(error => {
+                            this.$router.push({ name: "/employee" });
+                            Swal.fire("Warning!", error.data, "warning");
+                        });
+                    Swal.fire(
+                        "Deleted!",
+                        "Your file has been deleted.",
+                        "success"
+                    );
+                } else {
+                    Toast.fire({
+                        icon: "info",
+                        title: "Your Data is Now"
+                    });
+                }
+            });
         }
-        // fileUpload(event) {
-        //     console.log(event);
-        // }
+    },
+
+    created() {
+        this.showAllEmployee();
     }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.employee_photo {
+    width: 50px !important;
+    height: 50px !important;
+}
+</style>
