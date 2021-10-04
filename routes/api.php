@@ -21,10 +21,12 @@ Route::group([
 });
 
 // Employee ROute
-
-
 Route::post('create' , 'App\Http\Controllers\EmployeeContrller@store');
 Route::get('employee' , 'App\Http\Controllers\EmployeeContrller@index');
 Route::delete('employee/delete/{id}' , 'App\Http\Controllers\EmployeeContrller@delete');
 Route::get('employee-edit/{id}' , 'App\Http\Controllers\EmployeeContrller@edit');
 Route::patch('employee/update/{id}' , 'App\Http\Controllers\EmployeeContrller@update');
+
+
+// Supplier Route
+Route::apiResource('/supplier' , 'App\Http\Controllers\SupplierController');

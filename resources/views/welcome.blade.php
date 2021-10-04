@@ -509,6 +509,7 @@
                                     class="mdi mdi-file"></i><span class="hide-menu">Inventory</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><router-link to="/employee">Employees</router-link></li>
+                                <li><router-link to="/supplier">Supplier</router-link></li>
                             </ul>
                         </li>
 
