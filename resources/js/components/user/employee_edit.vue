@@ -99,9 +99,11 @@
                                                     placeholder="Enter Name"
                                                     v-model="form.name"
                                                 />
-                                                <span v-if="errors.name">{{
-                                                    errors.name[0]
-                                                }}</span>
+                                                <span
+                                                    v-if="errors.name"
+                                                    class="err"
+                                                    >{{ errors.name[0] }}</span
+                                                >
                                             </div>
                                         </div>
                                         <!--/span-->
@@ -117,9 +119,11 @@
                                                     placeholder="Email Address"
                                                     v-model="form.email"
                                                 />
-                                                <span v-if="errors.email">{{
-                                                    errors.email[0]
-                                                }}</span>
+                                                <span
+                                                    v-if="errors.email"
+                                                    class="err"
+                                                    >{{ errors.email[0] }}</span
+                                                >
                                             </div>
                                         </div>
                                         <!--/span-->
@@ -136,9 +140,11 @@
                                                     placeholder="Phone Number"
                                                     v-model="form.phone"
                                                 />
-                                                <span v-if="errors.phone">{{
-                                                    errors.phone[0]
-                                                }}</span>
+                                                <span
+                                                    v-if="errors.phone"
+                                                    class="err"
+                                                    >{{ errors.phone[0] }}</span
+                                                >
                                             </div>
                                         </div>
                                         <!--/span-->
@@ -153,9 +159,11 @@
                                                         >Employee</option
                                                     >
                                                 </select>
-                                                <span v-if="errors.role">{{
-                                                    errors.role[0]
-                                                }}</span>
+                                                <span
+                                                    v-if="errors.role"
+                                                    class="err"
+                                                    >{{ errors.role[0] }}</span
+                                                >
                                             </div>
                                         </div>
                                         <!--/span-->
@@ -174,9 +182,14 @@
                                                     placeholder="Salary"
                                                     v-model="form.salary"
                                                 />
-                                                <span v-if="errors.salary">{{
-                                                    errors.salary[0]
-                                                }}</span>
+
+                                                <span
+                                                    v-if="errors.salary"
+                                                    class="err"
+                                                    >{{
+                                                        errors.salary[0]
+                                                    }}</span
+                                                >
                                             </div>
                                         </div>
                                         <!--/span-->
@@ -189,9 +202,11 @@
                                                     id="photo"
                                                     @change="fileUpload"
                                                 />
-                                                <span v-if="errors.photo">{{
-                                                    errors.photo[0]
-                                                }}</span>
+                                                <span
+                                                    v-if="errors.photo"
+                                                    class="err"
+                                                    >{{ errors.photo[0] }}</span
+                                                >
                                                 <img
                                                     :src="form.photo"
                                                     height="100px"
@@ -228,12 +243,13 @@ export default {
     data() {
         return {
             form: {
-                name: null,
-                email: null,
-                phone: null,
-                role: null,
-                salary: null,
-                photo: null
+                name: "",
+                email: "",
+                phone: "",
+                role: "",
+                salary: "",
+                photo: "",
+                new_photo: ""
             },
             errors: {}
         };
@@ -243,24 +259,43 @@ export default {
         updateEmployee() {
             let id = this.$route.params.id;
             axios
-                .patch("/api/employee/update", this.form)
+                .patch("/api/employee/update/" + id, this.form)
                 .then(response => {
-                    this.$router.push({ name: "/employee" });
+                    this.form = "";
                     Toast.fire({
-                        icon: "Success",
+                        icon: "success",
                         title: "Data updated Successfully"
                     });
+                    this.$router.push({ name: "/employee" });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    this.errors = error.response.data.errors;
+                });
+        },
+
+        fileUpload(event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = event => {
+                this.form.new_photo = event.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     },
     created() {
         let id = this.$route.params.id;
-        axios
-            .get("/api/employee/edit/" + id)
-            .then(({ data }) => (this.form = data));
+        console.log(id);
+        // axios
+        //     .get("api/employee-edit/" + id)
+        //     .then(({ data }) => (this.form = data));
     }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.err {
+    font-weight: bold;
+    font-size: 12px;
+    color: red;
+}
+</style>

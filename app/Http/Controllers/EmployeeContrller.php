@@ -6,8 +6,10 @@ use Exception;
 use Throwable;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Unique;
 use Intervention\Image\Facades\Image;
 
 class EmployeeContrller extends Controller
@@ -47,7 +49,7 @@ class EmployeeContrller extends Controller
                 $img= Image::make($request->photo)->resize(200,200);
 
                 // Upload location get
-                $location = 'uploads/employee/';
+                $location = '/uploads/employee/';
 
                 // genatrate image uploaded name
                 $image_url = $location.$unique_ex;
@@ -97,8 +99,76 @@ class EmployeeContrller extends Controller
 
      // erturn Single user Data
      public function edit($id){
+
         $employee = Employee::find($id)->first();
         return response()->json($employee);
     }
+
+     // erturn Single user Data
+     public function update(Request $request,$id){
+
+         $user = Employee::find($id)->first();
+         $user_photo = $user -> photo;
+
+         return $user_photo;
+
+
+            $request -> validate([
+            'name'  =>  'required',
+            'email' =>   ['required', 'email', Rule::unique('employees')->ignore($user)],
+            'phone' =>   ['required', Rule::unique('employees')->ignore($user)],
+            'salary' => 'required',
+            'role' =>   'required',
+            'photo' =>   'required',
+
+           ]);
+
+
+           if($request->new_photo){
+               $file = $request->new_photo;
+               $position = strpos($file , ';');
+               $substr = substr($file,0,$position);
+               $arr = explode('/' , $substr)[1];
+               $unique = md5(time().rand()) . '.' . $arr;
+               $location = 'uploads/employee/';
+               $img= Image::make($file)->resize(200,200);
+               $im_url = $location.$unique;
+               unlink($user_photo);
+               $img->save($im_url);
+
+               $user -> name = $request -> name;
+               $user -> email = $request -> email;
+               $user -> phone = $request -> phone;
+               $user -> role = $request -> role;
+               $user -> salary = $request -> salary;
+
+
+                $user -> photo = $im_url;
+
+                $user -> update();
+
+
+
+
+
+           }else{
+
+               $user -> name = $request -> name;
+               $user -> email = $request -> email;
+               $user -> phone = $request -> phone;
+               $user -> role = $request -> role;
+               $user -> salary = $request -> salary;
+               $user -> photo = $request -> photo;
+               $user -> update();
+
+           }
+
+
+
+
+         return true;
+
+    }
+
 
 }
