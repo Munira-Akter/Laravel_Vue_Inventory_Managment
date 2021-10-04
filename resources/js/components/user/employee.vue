@@ -607,12 +607,14 @@ export default {
                 .then(response => {
                     this.showAllEmployee();
                     this.form = "";
-                    this.form.photo = null;
                     $("#success-header-modal").modal("hide");
                     Toast.fire({
                         icon: "success",
                         title: "Employee Added Successfully"
                     });
+                })
+                .catch(error => {
+                    console.log(error);
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors;

@@ -37,23 +37,30 @@ class SupplierController extends Controller
         ]);
 
         // File Upload function
-
+        $file_name = '';
         if($request->photo){
-            $file = $request->photo;
-            $pos = strpos($file, ';');
-            $sub = substr($file , 0 , $pos);
-            $extension = explode('/',$sub)[0];
-            $unique = md5(time().rand()). '.' . $extension;
-            $location = 'uploads/supplier';
-            $file_img = Image::make($file)->resize(200,200);
-            $file_name = $location.$unique;
-            $file_img->save($location);
-        }else{
-            $file_name = '';
-        }
+            //  GEt position index of ;
+            $position = strpos($request->photo,';');
+            // Get sub string from whole string with substr function
+            $substr = substr($request->photo , 0 , $position);
+            // Make string to array where / exixi then get 1 index value;
+            $extention = explode('/', $substr)[1];
 
+            // genatrate unique extention
+            $unique_ex = md5(time().rand()). '.' . $extention;
 
-        // Data Insert Into Database
+            // Make image resize using image intervation
+            $img= Image::make($request->photo)->resize(200,200);
+
+            // Upload location get
+            $location = 'uploads/supplier/';
+
+            // genatrate image uploaded name
+            $image_url = $location.$unique_ex;
+
+            // upload photo in project folder
+            $img->save($image_url);
+            // Data Insert Into Database
         Supplier::create([
             'name'   =>  $request->name,
             'email'  =>  $request->email,
@@ -62,6 +69,20 @@ class SupplierController extends Controller
             'shop' =>    $request->shop,
             'photo' =>  $file_name,
         ]);
+        }else{
+            // Data Insert Into Database
+        Supplier::create([
+            'name'   =>  $request->name,
+            'email'  =>  $request->email,
+            'phone'  =>  $request->phone,
+            'address' =>  $request->address,
+            'shop' =>    $request->shop,
+            'photo' =>  $file_name,
+        ]);
+        }
+
+
+
 
     }
 
@@ -148,12 +169,14 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         $supplier_photo = $supplier -> photo;
-        if($supplier_photo){
-            unlink($supplier_photo);
+        if(file_exists($supplier_photo)){
+            unlink($supplier -> photo);
             $supplier -> delete();
         }else{
             $supplier -> delete();
         }
+
+        return false;
 
     }
 }

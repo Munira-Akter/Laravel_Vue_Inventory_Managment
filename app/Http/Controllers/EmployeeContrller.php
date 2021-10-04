@@ -49,7 +49,7 @@ class EmployeeContrller extends Controller
                 $img= Image::make($request->photo)->resize(200,200);
 
                 // Upload location get
-                $location = '/uploads/employee/';
+                $location = 'uploads/employee/';
 
                 // genatrate image uploaded name
                 $image_url = $location.$unique_ex;

@@ -96,8 +96,9 @@
                                                 tabindex="0"
                                                 aria-controls="example23"
                                                 href="#"
+                                                @click.prevent="showmodal()"
                                                 data-toggle="modal"
-                                                data-target="#Supplier-header-modal"
+                                                data-target="#supplier-header-modal"
                                                 ><span>Add Supplier</span></a
                                             >
                                             <a
@@ -139,7 +140,7 @@
                                         >
                                             <label
                                                 >Search:<input
-                                                    v-model="serach"
+                                                    v-model="search"
                                                     type="search"
                                                     class="form-control form-control-sm"
                                                     placeholder=""
@@ -168,10 +169,10 @@
                                                             Phone
                                                         </th>
                                                         <th>
-                                                            Role
+                                                            Address
                                                         </th>
                                                         <th>
-                                                            Salary
+                                                            Shop
                                                         </th>
                                                         <th>
                                                             Image
@@ -205,13 +206,13 @@
                                                             rowspan="1"
                                                             colspan="1"
                                                         >
-                                                            Role
+                                                            Address
                                                         </th>
                                                         <th
                                                             rowspan="1"
                                                             colspan="1"
                                                         >
-                                                            Salary
+                                                            Shop
                                                         </th>
                                                         <th
                                                             rowspan="1"
@@ -228,22 +229,33 @@
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
-                                                    <tr role="row">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                    <tr
+                                                        role="row"
+                                                        v-for="supplier in filterSreach"
+                                                        :key="supplier.id"
+                                                    >
                                                         <td>
-                                                            <span
-                                                                class="badge badge-danger"
-                                                            ></span>
+                                                            {{ supplier.name }}
                                                         </td>
-                                                        <td></td>
+                                                        <td>
+                                                            {{ supplier.email }}
+                                                        </td>
+                                                        <td>
+                                                            {{ supplier.phone }}
+                                                        </td>
+                                                        <td>
+                                                            {{
+                                                                supplier.address
+                                                            }}
+                                                        </td>
+                                                        <td>
+                                                            {{ supplier.shop }}
+                                                        </td>
                                                         <td>
                                                             <img
-                                                                src="
-
+                                                                :src="
+                                                                    supplier.photo
                                                                 "
-                                                                class="employee_photo"
                                                             />
                                                         </td>
 
@@ -261,7 +273,12 @@
                                                             <a
                                                                 href="#"
                                                                 data-toggle="tooltip"
-                                                                data-original-title="Close"
+                                                                data-original-title="Delete"
+                                                                @click.prevent="
+                                                                    deleteSupplier(
+                                                                        supplier.id
+                                                                    )
+                                                                "
                                                             >
                                                                 <i
                                                                     class="fas fa-window-close text-danger"
@@ -284,14 +301,175 @@
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
+            0 01
             <!-- ============================================================== -->
+            +
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
 
+            <!-- === =========================================================== -->
+            <!-- En d footer -->
             <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
+        </div>
+        <div>
+            <div class="col-md-12">
+                <div
+                    ref="vuemodal"
+                    class="modal fade"
+                    id="supplier-header-modal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="success-header-modal"
+                    aria-hidden="true"
+                >
+                    <div
+                        class="modal-dialog modal-lg modal-dialog-centered"
+                        role="document"
+                    >
+                        <div class="modal-content">
+                            <div class="modal-header bg-info text-center ">
+                                <h3 class="text-light font-weight-bold">
+                                    Add Supplier
+                                </h3>
+                                <button
+                                    class="float-right close"
+                                    data-dismiss="modal"
+                                >
+                                    &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="">
+                                    <form
+                                        action=""
+                                        @submit.prevent="addSupplier"
+                                    >
+                                        <div class="row pt-3">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="username"
+                                                        >Name</label
+                                                    >
+                                                    <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="username"
+                                                        v-model="form.name"
+                                                        placeholder="Enter Supplier Name"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="emailaddress"
+                                                        >Email address</label
+                                                    >
+                                                    <input
+                                                        class="form-control"
+                                                        v-model="form.email"
+                                                        type="email"
+                                                        id="emailaddress"
+                                                        placeholder="Email Address"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+
+                                        <div class="row pt-3">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="phone"
+                                                        >Phone</label
+                                                    >
+                                                    <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="phone"
+                                                        v-model="form.phone"
+                                                        placeholder="Phone Number"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="shop"
+                                                        >Shop Name</label
+                                                    >
+                                                    <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="shop"
+                                                        v-model="form.shop"
+                                                        placeholder="Shop Details"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <div class="row pt-3">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="address"
+                                                        >Address</label
+                                                    >
+                                                    <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="address"
+                                                        v-model="form.address"
+                                                        placeholder="Address"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row pt-3">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label for="Photo"
+                                                        >Photo</label
+                                                    >
+                                                    <input
+                                                        class="form-control"
+                                                        type="file"
+                                                        id="Photo"
+                                                        @change.prevent="
+                                                            fileupload
+                                                        "
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <img
+                                                    :src="form.photo"
+                                                    height="100px"
+                                                    width="100px"
+                                                    id="supplier_img"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group text-center">
+                                            <button
+                                                class="btn btn-primary"
+                                                type="submit"
+                                            >
+                                                Add Supplier
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -299,14 +477,114 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            form: {
+                name: null,
+                email: null,
+                photo: null,
+                address: null,
+                phone: null,
+                shop: null
+            },
+            showmodal: false,
+            suppliers: [],
+            search: ""
+        };
+    },
+
+    computed: {
+        filterSreach() {
+            return this.suppliers.filter(supplier => {
+                return (
+                    supplier.name
+                        .toLowerCase()
+                        .match(this.search.toLowerCase()) ||
+                    supplier.email
+                        .toLowerCase()
+                        .match(this.search.toLowerCase()) ||
+                    supplier.phone
+                        .toLowerCase()
+                        .match(this.search.toLowerCase())
+                );
+            });
+        }
     },
 
     mounted() {
-        this
+        this.showalldata();
     },
 
-    methods: {}
+    methods: {
+        deleteSupplier(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#2196F3",
+                confirmButtonText: "Delete"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios
+                        .delete("api/supplier/" + id)
+                        .then(response => {
+                            this.showalldata();
+                        })
+                        .catch(error => {
+                            this.$router.push({
+                                name: "/supplier"
+                            });
+                            Swal.fire(
+                                "Something goes wrong",
+                                error.data,
+                                "warning"
+                            );
+                        });
+
+                    Toast.fire({
+                        icon: "danger",
+                        title: "Supplier Deleted Successfully"
+                    });
+                } else {
+                    Toast.fire({
+                        icon: "info",
+                        title: "Your Data is Now"
+                    });
+                }
+            });
+        },
+        showalldata() {
+            axios.get("api/supplier").then(response => {
+                this.suppliers = response.data;
+            });
+        },
+        fileupload(event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = event => {
+                this.form.photo = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        },
+        addSupplier() {
+            axios
+                .post("api/supplier", this.form)
+                .then(response => {
+                    this.form = "";
+                    this.showalldata();
+                    $("#supplier-header-modal").modal("hide");
+                    Toast.fire({
+                        icon: "success",
+                        title: "Supplier Added Successfully"
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }
 };
 </script>
 
