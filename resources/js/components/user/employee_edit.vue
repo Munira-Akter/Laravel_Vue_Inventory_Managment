@@ -83,7 +83,7 @@
                                 <h4 class="card-title">Edit Employee</h4>
                                 <form
                                     class="pl-3 pr-3"
-                                    @submit.prevent="updateEmployee"
+                                    @submit.prevent=""
                                     enctype="multipart/form-data"
                                 >
                                     <div class="row pt-3">
@@ -200,7 +200,6 @@
                                                     class="form-control"
                                                     type="file"
                                                     id="photo"
-                                                    @change="fileUpload"
                                                 />
                                                 <span
                                                     v-if="errors.photo"
@@ -254,6 +253,9 @@ export default {
             errors: {}
         };
     },
+    mounted() {
+        this.geteditData();
+    },
 
     methods: {
         updateEmployee() {
@@ -282,12 +284,9 @@ export default {
             reader.readAsDataURL(file);
         }
     },
-    created() {
-        let id = this.$route.params.id;
-        console.log(id);
-        // axios
-        //     .get("api/employee-edit/" + id)
-        //     .then(({ data }) => (this.form = data));
+
+    geteditData() {
+        console.log("hi");
     }
 };
 </script>

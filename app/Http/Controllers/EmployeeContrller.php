@@ -100,8 +100,9 @@ class EmployeeContrller extends Controller
      // erturn Single user Data
      public function edit($id){
 
-        $employee = Employee::find($id)->first();
-        return response()->json($employee);
+        // $employee = Employee::find(7)->first();
+        // return response()->json($employee);
+        return true;
     }
 
      // erturn Single user Data

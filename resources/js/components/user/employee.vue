@@ -266,7 +266,7 @@
                                                             <router-link
                                                                 :to="{
                                                                     name:
-                                                                        'employee-edit',
+                                                                        '/employee-edit',
                                                                     params: {
                                                                         id:
                                                                             employe.id

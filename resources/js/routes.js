@@ -13,9 +13,5 @@ export const routes = [
     { path: "/forget-password", component: forget, name: "/forget" },
     { path: "/logout", component: logout, name: "/logout" },
     { path: "/employee", component: employee, name: "/employee" },
-    {
-        path: "/employee-edit/:id",
-        component: employeeedit,
-        name: "employee-edit"
-    }
+    { path: "/employee-edit", component: employeeedit, name: "/employee-edit" }
 ];
