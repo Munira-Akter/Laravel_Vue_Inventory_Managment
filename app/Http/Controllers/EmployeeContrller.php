@@ -111,9 +111,6 @@ class EmployeeContrller extends Controller
          $user = Employee::find($id)->first();
          $user_photo = $user -> photo;
 
-         return $user_photo;
-
-
             $request -> validate([
             'name'  =>  'required',
             'email' =>   ['required', 'email', Rule::unique('employees')->ignore($user)],
