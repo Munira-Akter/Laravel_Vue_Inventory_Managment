@@ -253,8 +253,8 @@ export default {
             errors: {}
         };
     },
-    mounted() {
-        this.geteditData();
+    created() {
+        this.showdata();
     },
 
     methods: {
@@ -282,11 +282,14 @@ export default {
                 this.form.new_photo = event.target.result;
             };
             reader.readAsDataURL(file);
+        },
+        showdata() {
+            let id = this.$route.params.id;
+            console.log(id);
+            axios
+                .get("api/employeeedit/" + id)
+                .then(({ data }) => (this.form = data));
         }
-    },
-
-    geteditData() {
-        console.log("hi");
     }
 };
 </script>

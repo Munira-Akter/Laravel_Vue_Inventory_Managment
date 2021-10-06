@@ -37,7 +37,7 @@ class SupplierController extends Controller
         ]);
 
         // File Upload function
-        $file_name = '';
+        $image_url= '';
         if($request->photo){
             //  GEt position index of ;
             $position = strpos($request->photo,';');
@@ -67,7 +67,7 @@ class SupplierController extends Controller
             'phone'  =>  $request->phone,
             'address' =>  $request->address,
             'shop' =>    $request->shop,
-            'photo' =>  $file_name,
+            'photo' =>   $image_url,
         ]);
         }else{
             // Data Insert Into Database
@@ -77,7 +77,7 @@ class SupplierController extends Controller
             'phone'  =>  $request->phone,
             'address' =>  $request->address,
             'shop' =>    $request->shop,
-            'photo' =>  $file_name,
+            'photo' =>   $image_url,
         ]);
         }
 
@@ -169,14 +169,14 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         $supplier_photo = $supplier -> photo;
-        if(file_exists($supplier_photo)){
+        if($supplier_photo){
             unlink($supplier -> photo);
             $supplier -> delete();
         }else{
             $supplier -> delete();
         }
 
-        return false;
+
 
     }
 }
