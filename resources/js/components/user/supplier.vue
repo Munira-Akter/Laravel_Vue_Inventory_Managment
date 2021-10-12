@@ -256,12 +256,20 @@
                                                                 :src="
                                                                     supplier.photo
                                                                 "
+                                                                height="50px"
                                                             />
                                                         </td>
 
                                                         <td class="text-nowrap">
                                                             <router-link
-                                                                :to="{name:'/supplier-edit',params:{id:supplier.id}}"
+                                                                :to="{
+                                                                    name:
+                                                                        '/supplier-edit',
+                                                                    params: {
+                                                                        id:
+                                                                            supplier.id
+                                                                    }
+                                                                }"
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Edit"
                                                                 aria-describedby="tooltip766382"

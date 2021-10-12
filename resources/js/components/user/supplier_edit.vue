@@ -85,6 +85,7 @@
                                 <form
                                     class="pl-3 pr-3"
                                     enctype="multipart/form-data"
+                                    @submit.prevent="supplierUpdate()"
                                 >
                                     <div class="row pt-3">
                                         <div class="col-md-6">
@@ -212,7 +213,8 @@ export default {
                 address: null,
                 photo: null,
                 new_photo: null
-            }
+            },
+            errors: []
         };
     },
 
@@ -225,7 +227,32 @@ export default {
     },
 
     methods: {
-        fileupload(event) {}
+        fileupload(event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = event => {
+                this.form.new_photo = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        },
+
+        supplierUpdate() {
+            let id = this.$route.params.id;
+            axios
+                .post("/api/supplier/update/" + id, this.form)
+                .then(response => {
+                    this.form = "";
+                    Toast.fire({
+                        icon: "success",
+                        title: "Data updated Successfully"
+                    });
+                    this.$router.push({ name: "/supplier" });
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors;
+                });
+        }
     }
 };
 </script>

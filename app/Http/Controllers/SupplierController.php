@@ -116,16 +116,15 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function supplierUpdate(Request $request, $id)
     {
-        $supplier_photo =$supplier -> photo;
-
+        $supplier = Supplier::where('id',$id)->first();
         $request -> validate([
             'name' => 'required',
             'address' => 'required',
             'shop' => 'required',
             'email' => ['email' , Rule::unique('suppliers')->ignore($supplier)],
-            'phone' => 'required||unique:suppliers',
+            'phone' => ['required',Rule::unique('suppliers')->ignore($supplier)],
 
         ]);
 
@@ -135,15 +134,16 @@ class SupplierController extends Controller
             $file = $request->new_photo;
             $pos = strpos($file, ';');
             $sub = substr($file , 0 , $pos);
-            $extension = explode('/',$sub)[0];
+            $extension = explode('/',$sub)[1];
             $unique = md5(time().rand()). '.' . $extension;
-            $location = 'uploads/supplier';
+            $location = 'uploads/supplier/';
             $file_img = Image::make($file)->resize(200,200);
             $file_name = $location.$unique;
-            $file_img->save($location);
-            unlink($supplier_photo);
+            unlink($request -> photo);
+            $file_img->save($file_name);
+
         }else{
-            $file_name = $request->photo;
+            $file_name =  $supplier -> photo;
         }
 
         $supplier -> name = $request -> name;

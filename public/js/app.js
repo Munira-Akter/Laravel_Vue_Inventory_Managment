@@ -5846,6 +5846,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6163,6 +6171,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6174,7 +6183,8 @@ __webpack_require__.r(__webpack_exports__);
         address: null,
         photo: null,
         new_photo: null
-      }
+      },
+      errors: []
     };
   },
   mounted: function mounted() {
@@ -6187,7 +6197,36 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](console.log("error"));
   },
   methods: {
-    fileupload: function fileupload(event) {}
+    fileupload: function fileupload(event) {
+      var _this2 = this;
+
+      var file = event.target.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function (event) {
+        _this2.form.new_photo = event.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    supplierUpdate: function supplierUpdate() {
+      var _this3 = this;
+
+      var id = this.$route.params.id;
+      axios.post("/api/supplier/update/" + id, this.form).then(function (response) {
+        _this3.form = "";
+        Toast.fire({
+          icon: "success",
+          title: "Data updated Successfully"
+        });
+
+        _this3.$router.push({
+          name: "/supplier"
+        });
+      })["catch"](function (error) {
+        _this3.errors = error.response.data.errors;
+      });
+    }
   }
 });
 
@@ -54417,7 +54456,10 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _c("img", {
-                                          attrs: { src: supplier.photo }
+                                          attrs: {
+                                            src: supplier.photo,
+                                            height: "50px"
+                                          }
                                         })
                                       ]),
                                       _vm._v(" "),
@@ -54431,7 +54473,9 @@ var render = function() {
                                               attrs: {
                                                 to: {
                                                   name: "/supplier-edit",
-                                                  params: { id: supplier.id }
+                                                  params: {
+                                                    id: supplier.id
+                                                  }
                                                 },
                                                 "data-toggle": "tooltip",
                                                 "data-original-title": "Edit",
@@ -55130,7 +55174,13 @@ var render = function() {
                     "form",
                     {
                       staticClass: "pl-3 pr-3",
-                      attrs: { enctype: "multipart/form-data" }
+                      attrs: { enctype: "multipart/form-data" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.supplierUpdate()
+                        }
+                      }
                     },
                     [
                       _c("div", { staticClass: "row pt-3" }, [
