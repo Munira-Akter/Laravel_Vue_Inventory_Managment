@@ -28,3 +28,4 @@ Route::patch('employee/update/{id}' , 'App\Http\Controllers\EmployeeContrller@up
 
 // Supplier Route
 Route::apiResource('/supplier' , 'App\Http\Controllers\SupplierController');
+Route::get('/supplier-edit/{id}' , 'App\Http\Controllers\SupplierController@editsupplier');

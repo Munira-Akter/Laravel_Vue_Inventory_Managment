@@ -1,5 +1,5 @@
 <template>
-    <div id="employee">
+    <div id="supplier_edit">
         <div class="page-wrapper" style="min-height: 479px;">
             <!-- ============================================================== -->
             <!-- Container fluid  -->
@@ -11,14 +11,14 @@
                 <div class="row page-titles">
                     <div class="col-md-5 col-12 align-self-center">
                         <h3 class="text-themecolor mb-0 mt-0">
-                            All Employee
+                            All Supplier
                         </h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="javascript:void(0)">Employee </a>
+                                <a href="javascript:void(0)">Supplier </a>
                             </li>
                             <li class="breadcrumb-item active">
-                                All Employee
+                                All Supplier
                             </li>
                         </ol>
                     </div>
@@ -80,10 +80,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Edit Employee</h4>
+                                <h4 class="card-title">Edit Supplier</h4>
+
                                 <form
                                     class="pl-3 pr-3"
-                                    @submit.prevent="updateEmployee()"
                                     enctype="multipart/form-data"
                                 >
                                     <div class="row pt-3">
@@ -99,125 +99,84 @@
                                                     placeholder="Enter Name"
                                                     v-model="form.name"
                                                 />
-                                                <span
-                                                    v-if="errors.name"
-                                                    class="err"
-                                                    >{{ errors.name[0] }}</span
-                                                >
+                                                <span class="text-danger">
+                                                </span>
                                             </div>
                                         </div>
-                                        <!--/span-->
+
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="emailaddress"
-                                                    >Email address</label
-                                                >
+                                                <label for="Email">Email</label>
                                                 <input
                                                     class="form-control"
-                                                    type="email"
-                                                    id="emailaddress"
-                                                    placeholder="Email Address"
+                                                    type="text"
+                                                    id="Email"
+                                                    placeholder="Enter Email"
                                                     v-model="form.email"
                                                 />
-                                                <span
-                                                    v-if="errors.email"
-                                                    class="err"
-                                                    >{{ errors.email[0] }}</span
-                                                >
+                                                <span class="text-danger">
+                                                </span>
                                             </div>
                                         </div>
-                                        <!--/span-->
                                     </div>
 
                                     <div class="row pt-3">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="phone">Phone</label>
+                                                <label for="Shop">Shop</label>
                                                 <input
                                                     class="form-control"
                                                     type="text"
-                                                    id="phone"
-                                                    placeholder="Phone Number"
+                                                    id="Shop"
+                                                    placeholder="Enter Shop"
+                                                    v-model="form.shop"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Address"
+                                                    >Address</label
+                                                >
+                                                <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    id="Address"
+                                                    placeholder="Enter Address"
+                                                    v-model="form.address"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row pt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Phone">Phone</label>
+                                                <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    id="Phone"
+                                                    placeholder="Enter Phone"
                                                     v-model="form.phone"
                                                 />
-                                                <span
-                                                    v-if="errors.phone"
-                                                    class="err"
-                                                    >{{ errors.phone[0] }}</span
-                                                >
                                             </div>
                                         </div>
-                                        <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Role</label>
-                                                <select
-                                                    class="form-control"
-                                                    v-model="form.role"
-                                                >
-                                                    <option value="Employee"
-                                                        >Employee</option
-                                                    >
-                                                </select>
-                                                <span
-                                                    v-if="errors.role"
-                                                    class="err"
-                                                    >{{ errors.role[0] }}</span
-                                                >
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                    </div>
 
-                                    <div class="row pt-3">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="salary"
-                                                    >salary</label
-                                                >
-                                                <input
-                                                    class="form-control"
-                                                    type="text"
-                                                    id="salary"
-                                                    placeholder="Salary"
-                                                    v-model="form.salary"
-                                                />
-
-                                                <span
-                                                    v-if="errors.salary"
-                                                    class="err"
-                                                    >{{
-                                                        errors.salary[0]
-                                                    }}</span
-                                                >
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="photo">Photo</label>
+                                                <label for="Photo">Photo</label>
                                                 <input
                                                     class="form-control"
                                                     type="file"
-                                                    id="photo"
-                                                    @change.prevent="
-                                                        fileUpload($event)
-                                                    "
-                                                />
-                                                <span
-                                                    v-if="errors.photo"
-                                                    class="err"
-                                                    >{{ errors.photo[0] }}</span
-                                                >
-
-                                                <img
-                                                    :src="'form.new_photo'"
-                                                    height="100px"
-                                                    alt=""
+                                                    id="Photo"
+                                                    @change="fileupload($event)"
                                                 />
                                             </div>
+
+                                            <img :src="form.new_photo" alt="" />
                                         </div>
-                                        <!--/span-->
                                     </div>
 
                                     <div class="form-group text-center">
@@ -225,7 +184,7 @@
                                             class="btn btn-primary"
                                             type="submit"
                                         >
-                                            Update Employee
+                                            Update Supplier
                                         </button>
                                     </div>
                                 </form>
@@ -243,70 +202,32 @@
 
 <script>
 export default {
-    created() {
-        if (!User.loggedIn()) {
-            this.$router.push({ name: "/login" });
-        }
-    },
-
     data() {
         return {
             form: {
                 name: null,
                 email: null,
                 phone: null,
-                role: null,
-                salary: null,
+                shop: null,
+                address: null,
                 photo: null,
                 new_photo: null
-            },
-            errors: {}
+            }
         };
     },
 
     mounted() {
         let id = this.$route.params.id;
         axios
-            .get("/api/employee/" + id)
+            .get("/api/supplier-edit/" + id)
             .then(({ data }) => (this.form = data))
             .catch(console.log("error"));
     },
 
     methods: {
-        updateEmployee() {
-            let id = this.$route.params.id;
-            axios
-                .patch("/api/employee/update/" + id, this.form)
-                .then(response => {
-                    this.form = "";
-                    Toast.fire({
-                        icon: "success",
-                        title: "Data updated Successfully"
-                    });
-                    this.$router.push({ name: "/employee" });
-                })
-                .catch(error => {
-                    this.errors = error.response.data.errors;
-                });
-        },
-
-        fileUpload(event) {
-            let file = event.target.files[0];
-            let reader = new FileReader();
-            reader.onload = event => {
-                this.form.new_photo = event.target.result;
-                console.log(this.form.new_photo);
-            };
-            reader.readAsDataURL(file);
-        }
+        fileupload(event) {}
     }
 };
 </script>
 
-<style lang="scss" scoped>
-.err {
-    font-weight: bold;
-    font-size: 12px;
-    color: red;
-}
-</style>
+<style lang="scss" scoped></style>

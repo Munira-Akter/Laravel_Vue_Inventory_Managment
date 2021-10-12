@@ -47,7 +47,14 @@ try {
 import Notification from "./Helper/Notification";
 window.Notification = Notification;
 
+// Import Subheader
+
+import subheader from "./components/layouts/subheader.vue";
+
 const app = new Vue({
     el: "#app",
+    components: {
+        subheader
+    },
     router
 });

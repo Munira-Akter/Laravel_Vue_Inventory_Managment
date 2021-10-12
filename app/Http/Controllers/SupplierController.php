@@ -92,8 +92,9 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function editsupplier($id)
     {
+        $supplier = Supplier::where('id',$id)->first();
         return response()->json($supplier);
     }
 

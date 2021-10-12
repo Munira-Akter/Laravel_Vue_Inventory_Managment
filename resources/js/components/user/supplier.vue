@@ -261,7 +261,7 @@
 
                                                         <td class="text-nowrap">
                                                             <router-link
-                                                                to=""
+                                                                :to="{name:'/supplier-edit',params:{id:supplier.id}}"
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Edit"
                                                                 aria-describedby="tooltip766382"

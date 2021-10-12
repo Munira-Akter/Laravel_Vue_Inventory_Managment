@@ -6,6 +6,7 @@ let logout = require("./components/auth/logout.vue").default;
 let employee = require("./components/user/employee.vue").default;
 let employeeedit = require("./components/user/employee_edit.vue").default;
 let supplier = require("./components/user/supplier.vue").default;
+let supplieredit = require("./components/user/supplier_edit.vue").default;
 
 export const routes = [
     { path: "/supplier", component: supplier, name: "/supplier" },
@@ -19,5 +20,11 @@ export const routes = [
         path: "/employee-edit/:id",
         component: employeeedit,
         name: "/employee-edit"
+    },
+
+    {
+        path: "/supplier-edit/:id",
+        component: supplieredit,
+        name: "/supplier-edit"
     }
 ];
