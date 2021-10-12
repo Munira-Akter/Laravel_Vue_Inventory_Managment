@@ -272,14 +272,12 @@
                                                                             employe.id
                                                                     }
                                                                 }"
-                                                                data-toggle="tooltip"
-                                                                data-original-title="Edit"
-                                                                aria-describedby="tooltip766382"
                                                             >
                                                                 <i
-                                                                    class="fas fa-pencil-alt text-inverse mr-2"
-                                                                ></i>
-                                                            </router-link>
+                                                                    class="fas fa-edit text-danger"
+                                                                ></i
+                                                            ></router-link>
+
                                                             <a
                                                                 href="#"
                                                                 @click.prevent="
@@ -287,8 +285,6 @@
                                                                         employe.id
                                                                     )
                                                                 "
-                                                                data-toggle="tooltip"
-                                                                data-original-title="Close"
                                                             >
                                                                 <i
                                                                     class="fas fa-window-close text-danger"
@@ -606,12 +602,14 @@ export default {
                 .post("/api/create", this.form)
                 .then(response => {
                     this.showAllEmployee();
-                    this.form = "";
+                    this.form = null;
                     $("#success-header-modal").modal("hide");
                     Toast.fire({
                         icon: "success",
                         title: "Employee Added Successfully"
                     });
+
+                    this.$router.push({ name: "/employee" });
                 })
                 .catch(error => {
                     console.log(error);

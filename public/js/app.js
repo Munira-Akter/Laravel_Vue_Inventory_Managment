@@ -4900,10 +4900,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4957,11 +4953,15 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/create", this.form).then(function (response) {
         _this4.showAllEmployee();
 
-        _this4.form = "";
+        _this4.form = null;
         $("#success-header-modal").modal("hide");
         Toast.fire({
           icon: "success",
           title: "Employee Added Successfully"
+        });
+
+        _this4.$router.push({
+          name: "/employee"
         });
       })["catch"](function (error) {
         console.log(error);
@@ -5261,64 +5261,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  created: function created() {
+    if (!User.loggedIn()) {
+      this.$router.push({
+        name: "/login"
+      });
+    }
+  },
   data: function data() {
     return {
       form: {
-        name: "",
-        email: "",
-        phone: "",
-        role: "",
-        salary: "",
-        photo: "",
-        new_photo: ""
+        name: null,
+        email: null,
+        phone: null,
+        role: null,
+        salary: null,
+        photo: null,
+        new_photo: null
       },
       errors: {}
     };
   },
-  created: function created() {
-    this.showdata();
+  mounted: function mounted() {
+    var _this = this;
+
+    var id = this.$route.params.id;
+    console.log(id);
+    axios.get("/api/employee/" + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log("error"));
   },
   methods: {
     updateEmployee: function updateEmployee() {
-      var _this = this;
+      var _this2 = this;
 
       var id = this.$route.params.id;
       axios.patch("/api/employee/update/" + id, this.form).then(function (response) {
-        _this.form = "";
+        _this2.form = "";
         Toast.fire({
           icon: "success",
           title: "Data updated Successfully"
         });
 
-        _this.$router.push({
+        _this2.$router.push({
           name: "/employee"
         });
       })["catch"](function (error) {
-        _this.errors = error.response.data.errors;
+        _this2.errors = error.response.data.errors;
       });
     },
     fileUpload: function fileUpload(event) {
-      var _this2 = this;
+      var _this3 = this;
 
       var file = event.target.files[0];
       var reader = new FileReader();
 
       reader.onload = function (event) {
-        _this2.form.new_photo = event.target.result;
+        _this3.form.new_photo = event.target.result;
+        console.log(_this3.form.new_photo);
       };
 
       reader.readAsDataURL(file);
-    },
-    showdata: function showdata() {
-      var _this3 = this;
-
-      var id = this.$route.params.id;
-      console.log(id);
-      axios.get("api/employeeedit/" + id).then(function (_ref) {
-        var data = _ref.data;
-        return _this3.form = data;
-      });
     }
   }
 });
@@ -52524,17 +52533,13 @@ var render = function() {
                                                   params: {
                                                     id: employe.id
                                                   }
-                                                },
-                                                "data-toggle": "tooltip",
-                                                "data-original-title": "Edit",
-                                                "aria-describedby":
-                                                  "tooltip766382"
+                                                }
                                               }
                                             },
                                             [
                                               _c("i", {
                                                 staticClass:
-                                                  "fas fa-pencil-alt text-inverse mr-2"
+                                                  "fas fa-edit text-danger"
                                               })
                                             ]
                                           ),
@@ -52542,11 +52547,7 @@ var render = function() {
                                           _c(
                                             "a",
                                             {
-                                              attrs: {
-                                                href: "#",
-                                                "data-toggle": "tooltip",
-                                                "data-original-title": "Close"
-                                              },
+                                              attrs: { href: "#" },
                                               on: {
                                                 click: function($event) {
                                                   $event.preventDefault()
@@ -53376,6 +53377,7 @@ var render = function() {
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
+                          return _vm.updateEmployee()
                         }
                       }
                     },
@@ -53621,7 +53623,13 @@ var render = function() {
                             _vm._v(" "),
                             _c("input", {
                               staticClass: "form-control",
-                              attrs: { type: "file", id: "photo" }
+                              attrs: { type: "file", id: "photo" },
+                              on: {
+                                change: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.fileUpload($event)
+                                }
+                              }
                             }),
                             _vm._v(" "),
                             _vm.errors.photo
@@ -53632,7 +53640,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("img", {
                               attrs: {
-                                src: _vm.form.photo,
+                                src: "form.new_photo",
                                 height: "100px",
                                 alt: ""
                               }

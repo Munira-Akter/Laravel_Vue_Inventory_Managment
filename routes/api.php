@@ -1,6 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,7 +22,7 @@ Route::group([
 Route::post('create' , 'App\Http\Controllers\EmployeeContrller@store');
 Route::get('employee' , 'App\Http\Controllers\EmployeeContrller@index');
 Route::delete('employee/delete/{id}' , 'App\Http\Controllers\EmployeeContrller@delete');
-Route::get('/employeeedit/{id}' , 'App\Http\Controllers\EmployeeContrller@edit');
+Route::get('/employee/{id}' , 'App\Http\Controllers\EmployeeContrller@editEmployee');
 Route::patch('employee/update/{id}' , 'App\Http\Controllers\EmployeeContrller@update');
 
 

@@ -83,7 +83,7 @@
                                 <h4 class="card-title">Edit Employee</h4>
                                 <form
                                     class="pl-3 pr-3"
-                                    @submit.prevent=""
+                                    @submit.prevent="updateEmployee()"
                                     enctype="multipart/form-data"
                                 >
                                     <div class="row pt-3">
@@ -200,14 +200,18 @@
                                                     class="form-control"
                                                     type="file"
                                                     id="photo"
+                                                    @change.prevent="
+                                                        fileUpload($event)
+                                                    "
                                                 />
                                                 <span
                                                     v-if="errors.photo"
                                                     class="err"
                                                     >{{ errors.photo[0] }}</span
                                                 >
+
                                                 <img
-                                                    :src="form.photo"
+                                                    :src="'form.new_photo'"
                                                     height="100px"
                                                     alt=""
                                                 />
@@ -239,22 +243,34 @@
 
 <script>
 export default {
+    created() {
+        if (!User.loggedIn()) {
+            this.$router.push({ name: "/login" });
+        }
+    },
+
     data() {
         return {
             form: {
-                name: "",
-                email: "",
-                phone: "",
-                role: "",
-                salary: "",
-                photo: "",
-                new_photo: ""
+                name: null,
+                email: null,
+                phone: null,
+                role: null,
+                salary: null,
+                photo: null,
+                new_photo: null
             },
             errors: {}
         };
     },
-    created() {
-        this.showdata();
+
+    mounted() {
+        let id = this.$route.params.id;
+        console.log(id);
+        axios
+            .get("/api/employee/" + id)
+            .then(({ data }) => (this.form = data))
+            .catch(console.log("error"));
     },
 
     methods: {
@@ -280,15 +296,9 @@ export default {
             let reader = new FileReader();
             reader.onload = event => {
                 this.form.new_photo = event.target.result;
+                console.log(this.form.new_photo);
             };
             reader.readAsDataURL(file);
-        },
-        showdata() {
-            let id = this.$route.params.id;
-            console.log(id);
-            axios
-                .get("api/employeeedit/" + id)
-                .then(({ data }) => (this.form = data));
         }
     }
 };
