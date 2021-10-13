@@ -503,7 +503,7 @@
 
                         <li class="nav-devider"></li>
 
-                        <li class="nav-small-cap">Inventry</li>
+                        <li class="nav-small-cap">Man Power</li>
 
                         <li> <router-link to="/employee"><i
                             class="mdi mdi-account-multiple"></i>Employees</router-link>
@@ -513,13 +513,21 @@
                             class="mdi mdi-account-star"></i>Supplier</router-link>
                         </li>
 
+                        <li class="nav-devider"></li>
+
+                        <li class="nav-small-cap">Inventory</li>
+
                         <li> <router-link to="/category"><i
                             class="mdi mdi-format-line-style"></i>Category</router-link>
                         </li>
 
+                        <li> <router-link to="/product"><i
+                            class="mdi mdi-ornament"></i>Product</router-link>
+                        </li>
 
 
                         <li class="nav-devider"></li>
+
 
 
 

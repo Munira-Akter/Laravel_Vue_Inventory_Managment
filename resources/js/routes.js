@@ -9,6 +9,7 @@ let supplier = require("./components/user/supplier.vue").default;
 let supplieredit = require("./components/user/supplier_edit.vue").default;
 let category = require("./components/feature/category.vue").default;
 let categoryupdate = require("./components/feature/category_edit.vue").default;
+let product = require("./components/product/product.vue").default;
 
 export const routes = [
     { path: "/supplier", component: supplier, name: "/supplier" },
@@ -36,5 +37,11 @@ export const routes = [
         path: "/category-update/:id",
         component: categoryupdate,
         name: "/category-update"
+    },
+
+    {
+        path: "/product",
+        component: product,
+        name: "/product"
     }
 ];
