@@ -506,15 +506,15 @@
                         <li class="nav-small-cap">Inventry</li>
 
                         <li> <router-link to="/employee"><i
-                            class="mdi mdi-gauge"></i>Employees</router-link>
+                            class="mdi mdi-account-multiple"></i>Employees</router-link>
                         </li>
 
                         <li> <router-link to="/supplier"><i
-                            class="mdi mdi-gauge"></i>Supplier</router-link>
+                            class="mdi mdi-account-star"></i>Supplier</router-link>
                         </li>
 
                         <li> <router-link to="/category"><i
-                            class="mdi mdi-gauge"></i>Category</router-link>
+                            class="mdi mdi-format-line-style"></i>Category</router-link>
                         </li>
 
 

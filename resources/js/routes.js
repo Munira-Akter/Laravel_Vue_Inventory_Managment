@@ -7,6 +7,8 @@ let employee = require("./components/user/employee.vue").default;
 let employeeedit = require("./components/user/employee_edit.vue").default;
 let supplier = require("./components/user/supplier.vue").default;
 let supplieredit = require("./components/user/supplier_edit.vue").default;
+let category = require("./components/feature/category.vue").default;
+let categoryupdate = require("./components/feature/category_edit.vue").default;
 
 export const routes = [
     { path: "/supplier", component: supplier, name: "/supplier" },
@@ -26,5 +28,13 @@ export const routes = [
         path: "/supplier-edit/:id",
         component: supplieredit,
         name: "/supplier-edit"
+    },
+
+    { path: "/category", component: category, name: "/category" },
+
+    {
+        path: "/category-update/:id",
+        component: categoryupdate,
+        name: "/category-update"
     }
 ];
