@@ -38,4 +38,5 @@ Route::apiResource('/category' , 'App\Http\Controllers\CategoryController');
 
 // Product Controller Route
 Route::get('/suppliers' , 'App\Http\Controllers\ProductController@supplier');
+Route::get('/products' , 'App\Http\Controllers\ProductController@all');
 Route::apiResource('/product' , 'App\Http\Controllers\ProductController');

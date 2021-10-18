@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use App\Http\Controllers\EssentialController;
 
 class ProductController extends Controller
 {
@@ -24,6 +25,11 @@ class ProductController extends Controller
     public function supplier(){
         $supplier = Supplier::latest()->get();
         return response()->json($supplier);
+    }
+
+    public function all(){
+        $all = Product::latest()->get();
+        return response()->json($all);
     }
 
    
@@ -50,22 +56,7 @@ class ProductController extends Controller
             'category_id' => $request -> category_id,
 
         ]);
-
-
-        
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -74,7 +65,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return response()->json($product);
     }
 
     /**
@@ -84,9 +75,22 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        $file = EssentialController::photoupdate($request,$request -> new_photo, 'uploads/product/', $request -> photo);
+
+        $product -> name = $request -> name;
+        $product -> code = $request -> code;
+        $product -> root = $request -> root;
+        $product -> buying_date = $request -> buying_date;
+        $product -> buying_price = $request -> buying_price;
+        $product -> selling_price = $request -> selling_price;
+        $product -> qty = $request -> qty;
+        $product -> photo = $file;
+        $product -> supplier_id = $request -> supplier_id;
+        $product -> category_id = $request -> category_id;
+        $product->update();
+
     }
 
     /**
@@ -97,6 +101,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        EssentialController::delete($product);
     }
 }

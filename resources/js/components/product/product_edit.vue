@@ -1,5 +1,5 @@
 <template>
-    <div id="product">
+    <div id="supplier_edit">
         <div class="page-wrapper" style="min-height: 479px;">
             <!-- ============================================================== -->
             <!-- Container fluid  -->
@@ -80,209 +80,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Data Export</h4>
-                                <h6 class="card-subtitle">
-                                    Export data to Copy, CSV, Excel, PDF &amp;
-                                    Print
-                                </h6>
-                                <div class="table-responsive mt-4">
-                                    <div
-                                        id="example23_wrapper"
-                                        class="dataTables_wrapper container-fluid dt-bootstrap4"
-                                    >
-                                        <div class="dt-buttons">
-                                            <a
-                                                class="dt-button buttons-copy buttons-html5"
-                                                tabindex="0"
-                                                aria-controls="example23"
-                                                href="#"
-                                                data-toggle="modal"
-                                                data-target="#success-header-modal"
-                                                ><span>Add Product</span></a
-                                            >
-                                            <a
-                                                class="dt-button buttons-copy buttons-html5"
-                                                tabindex="0"
-                                                aria-controls="example23"
-                                                href="#"
-                                                ><span>Copy</span></a
-                                            >
-                                            <a
-                                                class="dt-button buttons-csv buttons-html5"
-                                                tabindex="0"
-                                                aria-controls="example23"
-                                                href="#"
-                                                ><span>CSV</span></a
-                                            ><a
-                                                class="dt-button buttons-excel buttons-html5"
-                                                tabindex="0"
-                                                aria-controls="example23"
-                                                href="#"
-                                                ><span>Excel</span></a
-                                            ><a
-                                                class="dt-button buttons-pdf buttons-html5"
-                                                tabindex="0"
-                                                aria-controls="example23"
-                                                href="#"
-                                                ><span>PDF</span></a
-                                            ><a
-                                                class="dt-button buttons-print"
-                                                tabindex="0"
-                                                aria-controls="example23"
-                                                href="#"
-                                                ><span>Print</span></a
-                                            >
-                                        </div>
-                                        <div
-                                            id="example23_filter"
-                                            class="dataTables_filter"
-                                        >
-                                            <label
-                                                >Search:<input
-                                                    v-model="serach"
-                                                    type="search"
-                                                    class="form-control form-control-sm"
-                                                    placeholder=""
-                                                    aria-controls="example23"
-                                            /></label>
-                                        </div>
-                                        <div class="table-responsive">
-                                            <table
-                                                id="example23"
-                                                class="display nowrap table table-hover table-striped table-bordered dataTable dtr-inline"
-                                                role="grid"
-                                                aria-describedby="example23_info"
-                                                style="width: 100%;"
-                                                width="100%"
-                                                cellspacing="0"
-                                            >
-                                                <thead>
-                                                    <tr role="row">
-                                                        <th>
-                                                            Name
-                                                        </th>
-                                                        <th>
-                                                            Product Code
-                                                        </th>
-                                                        <th>
-                                                            Quantity
-                                                        </th>
-                                                        <th colspan="2">
-                                                            Profit
-                                                        </th>
+                                <h4 class="card-title">Edit Product</h4>
 
-                                                        <th>
-                                                            Image
-                                                        </th>
-                                                        <th>
-                                                            Action
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <tr role="row" v-for="product in products" :key="product.id">
-                                                        <td>{{product.name}}</td>
-                                                        <td>{{product.code}}</td>
-                                                        <td>{{product.qty}}</td>
-                                                        <td colspan="2" v-if="product.buying_price < product.selling_price">
-                                                            <span
-                                                                class="badge badge-success"
-                                                            >{{ product.selling_price - product.buying_price }}</span>
-                                                        </td>
-
-                                                         <td colspan="2" v-if="product.buying_price > product.selling_price">
-                                                            <span
-                                                                class="badge badge-danger"
-                                                            >{{ product.selling_price - product.buying_price }}</span>
-                                                        </td>
-
-                                                        <td><img :src="product.photo" height="100px"></td>
-
-                                                        <td class="text-nowrap">
-                                                            <router-link :to="{name:'/productedit',params:{id:product.id}}">
-                                                                <i
-                                                                    class="fas fa-edit text-primary"
-                                                                ></i
-                                                            ></router-link>
-
-                                                            <a href="#" @click.prevent="deleteProduct(product.id)">
-                                                                <i
-                                                                    class="fas fa-window-close text-danger"
-                                                                ></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
-            <div class="col-md-12">
-                <div
-                    ref="vuemodal"
-                    class="modal fade"
-                    id="success-header-modal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="success-header-modal"
-                    aria-hidden="true"
-                >
-                    <div
-                        class="modal-dialog modal-lg modal-dialog-centered"
-                        role="document"
-                    >
-                        <div class="modal-content">
-                            <div class="modal-header bg-info text-center ">
-                                <h3 class="text-light font-weight-bold">
-                                    Add Product
-                                </h3>
-                                <button
-                                    class="float-right close"
-                                    data-dismiss="modal"
-                                >
-                                    &times;
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="text-center mt-2 mb-4">
-                                    <a href="index.html" class="text-success">
-                                        <span
-                                            ><img
-                                                class="mr-2"
-                                                :src="
-                                                    '../assets/images/logo-icon.png'
-                                                "
-                                                alt=""
-                                                height="18"/><img
-                                                :src="
-                                                    '../assets/images/logo-text.png'
-                                                "
-                                                alt=""
-                                                height="18"
-                                        /></span>
-                                    </a>
-                                </div>
-
-                                <form
+                                  <form
                                     class="pl-3 pr-3"
                                     enctype="multipart/form-data"
                                     @submit.prevent="productInsert()"
@@ -434,7 +234,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="buying_price"
-                                                    >buying_price</label
+                                                    >Buying_price</label
                                                 >
                                                 <input
                                                     class="form-control"
@@ -463,13 +263,13 @@
                                                     class="form-control"
                                                     type="file"
                                                     id="photo"
-                                                    @change="fileUpload($event)"
+                                                   
                                                 />
                                                 <span v-if="errors.photo">{{
                                                     errors.photo[0]
                                                 }}</span>
                                                 <img
-                                                    :src="form.photo"
+                                                    :src="form.new_photo"
                                                     height="100px"
                                                     alt=""
                                                 />
@@ -497,16 +297,18 @@
                                             class="btn btn-primary"
                                             type="submit"
                                         >
-                                            Add Product
+                                            Update Product
                                         </button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer"></div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
         </div>
     </div>
 </template>
@@ -525,133 +327,15 @@ export default {
                 selling_price: null,
                 photo: null,
                 qty: null,
-                root: null
+                root: null,
+                new_photo:null
             },
-
-            errors: {},
-            serach: "",
-
-            category: [],
-            suppliers:[],
-            products:[]
+            errors: []
         };
-    },
+    }
+}
 
-  
-    computed: {
-        filterSreach() {
-            return this.product.filter(product => {
-                return (
-                    product.name.match(this.serach)
-                    // product.code
-                    //     .toLowerCase()
-                    //     .match(this.serach.toLowerCase()) ||
-                    // product.buying_date.toLowerCase().match(this.serach.toLowerCase())
-                );
-            });
-        }
-    },
-
-      created(){
-
-        axios.get('api/product/')
-        .then(response => {
-            this.category = response.data;
-        }).catch(error => { 
-            console.log(error)});
-
-        axios.get('api/suppliers/').then(response => {
-            this.suppliers = response.data;
-        }).catch(error => {
-            console.log(error)});
-
-
-        this.showallProduct();
-     },
-
-
-     methods : {
-         fileUpload(event){
-             let file = event.target.files[0];
-             let reader = new FileReader();
-             reader.onload = event => {
-                 this.form.photo = event.target.result;
-             }
-             reader.readAsDataURL(file);
-
-         },
-         productInsert(){
-
-             axios.post('api/product',this.form).then(response => { 
-                 $('#success-header-modal').modal('hide');
-                //  this.resetForm(); 
-                 this.$router.push({name:'/product'});
-                 this.showallProduct();
-                   Toast.fire({
-                        icon: "Success",
-                        title: "Product Added Successfully"
-                    });
-
-             }).catch(error => {
-                 
-                 this.errors = error.response.data.error;
-                 
-             });
-         },
-
-         showallProduct(){
-             axios.get('api/products').then(response => {
-                 this.products = response.data;
-             }).catch(error => {
-                 console.log(error)
-             });
-
-         },
-
-         deleteProduct(id){
-              Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#2196F3",
-                confirmButtonText: "Delete"
-            }).then(result => {
-                if (result.isConfirmed) {
-                    axios
-                        .delete("api/product/" + id)
-                        .then(res => {
-                            this.showallProduct();
-                             Swal.fire(
-                            "Deleted!",
-                            "Your data has been deleted.",
-                            "success"
-                        );
-                        })
-                        .catch(error => {
-                            this.$router.push({ name: "/product" });
-                            Swal.fire("Warning!", error.data, "warning");
-                        });
-                   
-                } else {
-                    Toast.fire({
-                        icon: "info",
-                        title: "Your Data is Now"
-                    });
-                }
-            });
-       
-         }
-
-        
-     }
-};
+ 
 </script>
 
-<style lang="scss" scoped>
-.employee_photo {
-    width: 50px !important;
-    height: 50px !important;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -40,4 +40,37 @@ class EssentialController
     }
 }
 
+
+public static function delete($data){
+
+    if(!empty($data -> photo)){
+        unlink($data -> photo);
+        $data -> delete();
+    }else{
+        $data -> delete();
+    }
+}
+
+
+public static function photoupdate($request,$new_photo,$locations,$old){
+
+    if ($request->$new_photo) {
+        $file = $request->$new_photo;
+        $position = strpos($file, ';');
+        $substr = substr($file, 0, $position);
+        $arr = explode('/', $substr)[1];
+        $unique = md5(time().rand()) . '.' . $arr;
+        $location = $locations;
+        $img= Image::make($file)->resize(200, 200);
+        $im_url = $location.$unique;
+        unlink($old);
+        $img->save($im_url);
+        return $im_url;
+    }else{
+        $im_url =  $old;
+        return $im_url;
+    }
+
+}
+
 }
