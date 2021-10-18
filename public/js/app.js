@@ -5455,7 +5455,7 @@ __webpack_require__.r(__webpack_exports__);
       var reader = new FileReader();
 
       reader.onload = function (event) {
-        _this2.photo = event.target.result;
+        _this2.form.photo = event.target.result;
       };
 
       reader.readAsDataURL(file);

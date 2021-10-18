@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -34,7 +35,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json($request);
+        $fileupload = (new EssentialController)->fileupload($request , 'photo','uploads/product/');
+        
     }
 
     /**
