@@ -279,7 +279,7 @@
                                 <form
                                     class="pl-3 pr-3"
                                     enctype="multipart/form-data"
-                                    @submit.prevent=""
+                                    @submit.prevent="productInsert()"
                                 >
                                     <div class="row pt-3">
                                         <div class="col-md-6">
@@ -330,7 +330,7 @@
                                                     class="form-control"
                                                     v-model="form.category"
                                                 >
-                                                    <option value=""></option>
+                                                    <option :value="cat.id" v-for="cat in category" :key="cat.id">{{cat.name}}</option>
                                                 </select>
 
                                                 <span v-if="errors.category">{{
@@ -348,7 +348,8 @@
                                                     class="form-control"
                                                     v-model="form.supplier"
                                                 >
-                                                    <option value=""></option>
+                                           <option :value="supplier.id" v-for="supplier in suppliers" :key="supplier.id">{{supplier.name}}</option>
+
                                                 </select>
 
                                                 <span v-if="errors.supplier">{{
@@ -456,7 +457,7 @@
                                                     class="form-control"
                                                     type="file"
                                                     id="photo"
-                                                    @change="fileUpload"
+                                                    @change="fileUpload($event)"
                                                 />
                                                 <span v-if="errors.photo">{{
                                                     errors.photo[0]
@@ -476,7 +477,7 @@
                                                     class="form-control"
                                                     type="text"
                                                     id="qty"
-                                                    @change="qty"
+                                                    v-model="form.qty"
                                                 />
                                                 <span v-if="errors.qty">{{
                                                     errors.qty[0]
@@ -515,16 +516,60 @@ export default {
                 supplier: null,
                 buying_date: null,
                 buying_price: null,
-                salling_price: null,
+                selling_price: null,
                 photo: null,
                 qty: null,
                 root: null
             },
 
             errors: {},
-            serach: ""
+            serach: "",
+
+            category: [],
+            suppliers:[],
         };
-    }
+    },
+
+    created(){
+
+        axios.get('api/product/')
+        .then(response => {
+            this.category = response.data;
+        }).catch(error => { 
+            console.log(error)});
+
+        axios.get('api/suppliers/').then(response => {
+            this.suppliers = response.data;
+            console.log(this.suppliers)
+        }).catch(error => {
+            console.log(error)})
+
+
+
+        
+     },
+
+
+     methods : {
+         fileUpload(event){
+             let file = event.target.files[0];
+             let reader = new FileReader();
+             reader.onload = event => {
+                 this.photo = event.target.result;
+             }
+
+             reader.readAsDataURL(file);
+
+         },
+         productInsert(){
+
+             axios.post('api/product',this.form).then(response => { 
+                 console.log(response.data);
+             }).catch(error => { 
+                 console.log(error)
+             })
+         }
+     }
 };
 </script>
 

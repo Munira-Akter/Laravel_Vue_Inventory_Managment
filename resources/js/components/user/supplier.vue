@@ -231,7 +231,7 @@
                                                 <tbody>
                                                     <tr
                                                         role="row"
-                                                        v-for="supplier in filterSreach"
+                                                        v-for="supplier in suppliers"
                                                         :key="supplier.id"
                                                     >
                                                         <td>
@@ -309,9 +309,9 @@
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
-            0 01
+            
             <!-- ============================================================== -->
-            +
+            
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
@@ -494,7 +494,6 @@ export default {
                 phone: null,
                 shop: null
             },
-            showmodal: false,
             suppliers: [],
             search: ""
         };
@@ -518,9 +517,8 @@ export default {
         }
     },
 
-    mounted() {
-        this.showalldata();
-    },
+    
+
 
     methods: {
         deleteSupplier(id) {
@@ -551,7 +549,7 @@ export default {
                         });
 
                     Toast.fire({
-                        icon: "danger",
+                        icon: "Danger",
                         title: "Supplier Deleted Successfully"
                     });
                 } else {
@@ -562,11 +560,13 @@ export default {
                 }
             });
         },
+
         showalldata() {
-            axios.get("api/supplier").then(response => {
+            axios.get("/api/supplier").then(response => {
                 this.suppliers = response.data;
             });
         },
+
         fileupload(event) {
             let file = event.target.files[0];
             let reader = new FileReader();
@@ -592,7 +592,11 @@ export default {
                     console.log(error);
                 });
         }
-    }
+    },
+
+    created(){
+        this.showalldata();
+    },
 };
 </script>
 

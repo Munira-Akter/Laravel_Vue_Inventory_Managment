@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
 
 class SupplierController extends Controller
@@ -16,7 +17,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-       $supplier = Supplier::latest()->get();
+       $supplier = Supplier::all();
        return response()->json($supplier);
     }
     /**

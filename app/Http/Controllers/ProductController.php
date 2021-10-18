@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,19 +16,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $cat = Category::latest()->get();
+        return response()->json($cat);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function supplier(){
+        $supplier = Supplier::latest()->get();
+        return response()->json($supplier);
     }
 
+   
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +34,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json($request);
     }
 
     /**

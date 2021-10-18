@@ -5410,6 +5410,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5420,14 +5421,52 @@ __webpack_require__.r(__webpack_exports__);
         supplier: null,
         buying_date: null,
         buying_price: null,
-        salling_price: null,
+        selling_price: null,
         photo: null,
         qty: null,
         root: null
       },
       errors: {},
-      serach: ""
+      serach: "",
+      category: [],
+      suppliers: []
     };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('api/product/').then(function (response) {
+      _this.category = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    axios.get('api/suppliers/').then(function (response) {
+      _this.suppliers = response.data;
+      console.log(_this.suppliers);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  },
+  methods: {
+    fileUpload: function fileUpload(event) {
+      var _this2 = this;
+
+      var file = event.target.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function (event) {
+        _this2.photo = event.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    productInsert: function productInsert() {
+      axios.post('api/product', this.form).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -6930,7 +6969,6 @@ __webpack_require__.r(__webpack_exports__);
         phone: null,
         shop: null
       },
-      showmodal: false,
       suppliers: [],
       search: ""
     };
@@ -6943,9 +6981,6 @@ __webpack_require__.r(__webpack_exports__);
         return supplier.name.toLowerCase().match(_this.search.toLowerCase()) || supplier.email.toLowerCase().match(_this.search.toLowerCase()) || supplier.phone.toLowerCase().match(_this.search.toLowerCase());
       });
     }
-  },
-  mounted: function mounted() {
-    this.showalldata();
   },
   methods: {
     deleteSupplier: function deleteSupplier(id) {
@@ -6971,7 +7006,7 @@ __webpack_require__.r(__webpack_exports__);
             Swal.fire("Something goes wrong", error.data, "warning");
           });
           Toast.fire({
-            icon: "danger",
+            icon: "Danger",
             title: "Supplier Deleted Successfully"
           });
         } else {
@@ -6985,7 +7020,7 @@ __webpack_require__.r(__webpack_exports__);
     showalldata: function showalldata() {
       var _this3 = this;
 
-      axios.get("api/supplier").then(function (response) {
+      axios.get("/api/supplier").then(function (response) {
         _this3.suppliers = response.data;
       });
     },
@@ -7018,6 +7053,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     }
+  },
+  created: function created() {
+    this.showalldata();
   }
 });
 
@@ -55125,6 +55163,7 @@ var render = function() {
                           on: {
                             submit: function($event) {
                               $event.preventDefault()
+                              return _vm.productInsert()
                             }
                           }
                         },
@@ -55263,7 +55302,17 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_c("option", { attrs: { value: "" } })]
+                                  _vm._l(_vm.category, function(cat) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: cat.id,
+                                        domProps: { value: cat.id }
+                                      },
+                                      [_vm._v(_vm._s(cat.name))]
+                                    )
+                                  }),
+                                  0
                                 ),
                                 _vm._v(" "),
                                 _vm.errors.category
@@ -55315,7 +55364,17 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_c("option", { attrs: { value: "" } })]
+                                  _vm._l(_vm.suppliers, function(supplier) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: supplier.id,
+                                        domProps: { value: supplier.id }
+                                      },
+                                      [_vm._v(_vm._s(supplier.name))]
+                                    )
+                                  }),
+                                  0
                                 ),
                                 _vm._v(" "),
                                 _vm.errors.supplier
@@ -55519,7 +55578,11 @@ var render = function() {
                                 _c("input", {
                                   staticClass: "form-control",
                                   attrs: { type: "file", id: "photo" },
-                                  on: { change: _vm.fileUpload }
+                                  on: {
+                                    change: function($event) {
+                                      return _vm.fileUpload($event)
+                                    }
+                                  }
                                 }),
                                 _vm._v(" "),
                                 _vm.errors.photo
@@ -55545,9 +55608,29 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.form.qty,
+                                      expression: "form.qty"
+                                    }
+                                  ],
                                   staticClass: "form-control",
                                   attrs: { type: "text", id: "qty" },
-                                  on: { change: _vm.qty }
+                                  domProps: { value: _vm.form.qty },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.form,
+                                        "qty",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
                                 }),
                                 _vm._v(" "),
                                 _vm.errors.qty
@@ -57428,7 +57511,7 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "tbody",
-                                _vm._l(_vm.filterSreach, function(supplier) {
+                                _vm._l(_vm.suppliers, function(supplier) {
                                   return _c(
                                     "tr",
                                     {
@@ -57555,10 +57638,7 @@ var render = function() {
               ])
             ])
           ])
-        ]),
-        _vm._v(" "),
-        _vm._v("\n        0 01\n        "),
-        _vm._v("\n        +\n        ")
+        ])
       ]
     ),
     _vm._v(" "),
