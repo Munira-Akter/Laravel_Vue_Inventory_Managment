@@ -32,8 +32,11 @@ class EssentialController
 
                 // upload photo in project folder
                 $img->save($image_url);
+
+                return $image_url;
     }else{
         $image_url = '';
+        return $image_url;
     }
 }
 

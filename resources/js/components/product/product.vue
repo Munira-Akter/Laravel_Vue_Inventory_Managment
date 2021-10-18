@@ -527,6 +527,7 @@ export default {
 
             category: [],
             suppliers:[],
+            products:[]
         };
     },
 
@@ -540,13 +541,8 @@ export default {
 
         axios.get('api/suppliers/').then(response => {
             this.suppliers = response.data;
-            console.log(this.suppliers)
         }).catch(error => {
             console.log(error)})
-
-
-
-        
      },
 
 
@@ -557,16 +553,21 @@ export default {
              reader.onload = event => {
                  this.form.photo = event.target.result;
              }
-
              reader.readAsDataURL(file);
 
          },
          productInsert(){
 
              axios.post('api/product',this.form).then(response => { 
-                 console.log(response.data);
+                this.products = response.data;
+                 $('#success-header-modal').modal('hide');
+                   Toast.fire({
+                        icon: "Success",
+                        title: "Product Added Successfully"
+                    });
+
              }).catch(error => { 
-                 console.log(error)
+                 
              })
          }
      }

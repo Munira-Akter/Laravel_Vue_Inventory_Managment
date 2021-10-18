@@ -5429,7 +5429,8 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       serach: "",
       category: [],
-      suppliers: []
+      suppliers: [],
+      products: []
     };
   },
   created: function created() {
@@ -5442,7 +5443,6 @@ __webpack_require__.r(__webpack_exports__);
     });
     axios.get('api/suppliers/').then(function (response) {
       _this.suppliers = response.data;
-      console.log(_this.suppliers);
     })["catch"](function (error) {
       console.log(error);
     });
@@ -5461,11 +5461,16 @@ __webpack_require__.r(__webpack_exports__);
       reader.readAsDataURL(file);
     },
     productInsert: function productInsert() {
+      var _this3 = this;
+
       axios.post('api/product', this.form).then(function (response) {
-        console.log(response.data);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+        _this3.products = response.data;
+        $('#success-header-modal').modal('hide');
+        Toast.fire({
+          icon: "Success",
+          title: "Product Added Successfully"
+        });
+      })["catch"](function (error) {});
     }
   }
 });

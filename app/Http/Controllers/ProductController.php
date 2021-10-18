@@ -36,6 +36,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $fileupload = (new EssentialController)->fileupload($request , 'photo','uploads/product/');
+
+        Product::create([
+            'name' => $request -> name,
+            'qty' => $request -> qty,
+            'selling_price' => $request -> selling_price,
+            'buying_price' => $request -> buying_price,
+            'root' => $request -> root,
+            'code' => $request -> code,
+            'buying_date' => $request -> buying_date,
+            'photo' => $fileupload,
+            'supplier_id' => $request -> supplier_id,
+            'category_id' => $request -> category_id,
+
+        ]);
+
+
         
     }
 
